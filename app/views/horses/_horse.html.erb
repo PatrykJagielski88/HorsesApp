@@ -2,7 +2,7 @@
 <div class="column">
   <div class="card">
 
-    <%= form_with url:cart_index_path, method: :post do %>
+    <%# <%= form_with url:cart_index_path, method: :post do %> %>
 
       <div class="card-content">
         <p class="title">
@@ -30,8 +30,18 @@
           Speed: <br><%= horse.top_speed.round(2) %>
         </p>
         <%= hidden_field_tag(:id,horse.id) %>
-        <%= button_tag 'Add to cart ✅' %>
+        <% if cart.include?(horse) %>
+          <%= button_to cart_path(horse), method: :delete do %>
+            Remove from cart
+          <% end %>
+        <% else %>
+          <%= form_with url: cart_index_path, method: :post do %>
+            <%= hidden_field_tag(:id,horse.id) %>
+            <%= button_tag 'Add to cart ✅' %>
+          <% end %>
+        <% end %>
+
       </footer>
     </div>
-  <% end %>
+  <%# <% end %> %>
 </div>
